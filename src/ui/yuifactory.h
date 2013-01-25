@@ -48,9 +48,9 @@ namespace UI{
 			virtual yRadioButtonGroup * createRadioButtonGroup(VLayout *);
 			virtual yRadioButtonGroup * createRadioButtonGroup(Dialog *);
 			
-			virtual yIntField * createIntField(HLayout *,string,int,int,int);
-			virtual yIntField * createIntField(VLayout *,string,int,int,int);
-			virtual yIntField * createIntField(Dialog *,string,int,int,int);
+			virtual yIntField * createIntField(HLayout *, std::string,int,int,int);
+			virtual yIntField * createIntField(VLayout *, std::string,int,int,int);
+			virtual yIntField * createIntField(Dialog *, std::string,int,int,int);
 
 			virtual yCheckBox * createCheckBox(Dialog * parent,std::string text,bool);
 			virtual yCheckBox * createCheckBox(HLayout * parent,std::string text,bool);

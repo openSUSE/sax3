@@ -107,7 +107,7 @@ namespace UI{
 		yPushButton(yVLayout *,std::string text);
 		YPushButton * getElement();
 		void setEnabled(bool);
-		string value();
+                std::string value();
 		~yPushButton();
 	};
 
@@ -131,8 +131,8 @@ namespace UI{
 		
 		void addItem(std::string item);
 		YComboBox * getElement();
-		string value();
-		void setValue(string&);
+                std::string value();
+		void setValue(std::string&);
 		void deleteAllItems();
 		void setDisabled();
 		void setEnabled();
@@ -148,7 +148,7 @@ namespace UI{
 		yMultiSelectionBox(yHLayout*,std::string label);
 		yMultiSelectionBox(yVLayout*,std::string label);
 		void addItem(std::string item);
-		void selectedItems(vector<string> &list);
+		void selectedItems(std::vector<std::string> &list);
 		~yMultiSelectionBox();
 	};
 
@@ -157,7 +157,7 @@ namespace UI{
 		YTable * table;
 		YTableHeader * header;
 		YItemCollection items;
-		typedef std::pair<string,string> P;
+		typedef std::pair<std::string,std::string> P;
 		std::vector<P> i;
 		YItemCollection createList();
 		public:
@@ -184,7 +184,7 @@ namespace UI{
 		yRadioButtonGroup(yDialog*);
 		yRadioButtonGroup(yHLayout*);
 		yRadioButtonGroup(yVLayout*);
-		string selectedLabel();
+                std::string selectedLabel();
 		void addButton(std::string);
 		bool isButton(int,YWidget*);
 		void setValue(int,int);
@@ -195,9 +195,9 @@ namespace UI{
 	class yIntField : public IntField{
 		YIntField * field;
 		public:
-		yIntField(yDialog*,string,int,int,int);
-		yIntField(yHLayout*,string,int,int,int);
-		yIntField(yVLayout*,string,int,int,int);
+		yIntField(yDialog*,std::string,int,int,int);
+		yIntField(yHLayout*,std::string,int,int,int);
+		yIntField(yVLayout*,std::string,int,int,int);
 		int value();
 		void setDisabled();
 		void setEnabled();
@@ -209,9 +209,9 @@ namespace UI{
 	class yCheckBox : public CheckBox{
 		YCheckBox * cb;
 		public:
-		yCheckBox(yDialog*,string,bool);
-		yCheckBox(yHLayout*,string,bool);
-		yCheckBox(yVLayout*,string,bool);
+		yCheckBox(yDialog*,std::string,bool);
+		yCheckBox(yHLayout*,std::string,bool);
+		yCheckBox(yVLayout*,std::string,bool);
 		bool isChecked();
 		void setChecked(bool);
 		YCheckBox* getElement();

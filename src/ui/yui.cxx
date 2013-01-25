@@ -114,7 +114,7 @@ namespace UI{
 	YPushButton* yPushButton::getElement(){
 		return button;
 	}
-	string yPushButton::value(){
+        std::string yPushButton::value(){
 		return button->label();
 	}
 	yPushButton::~yPushButton(){
@@ -156,16 +156,16 @@ namespace UI{
 		comboBox = YUI::widgetFactory()->createComboBox(parent->getElement(),text,false);
 		comboBox->setNotify(true);
 	}
-	void yComboBox::addItem(string item){
+	void yComboBox::addItem(std::string item){
 		comboBox->addItem(item);
 	}
 	YComboBox * yComboBox::getElement(){
 		return comboBox;
 	}
-	string yComboBox::value(){
+        std::string yComboBox::value(){
 		return comboBox->value();
 	}
-	void yComboBox::setValue(string &value){
+	void yComboBox::setValue(std::string &value){
 		comboBox->setValue(value);
 	}
 	void yComboBox::deleteAllItems(){
@@ -194,13 +194,13 @@ namespace UI{
 	yMultiSelectionBox::yMultiSelectionBox(yVLayout * parent,std::string label){
 		multi = YUI::widgetFactory()->createMultiSelectionBox(parent->getElement(),label);
 	}
-	void yMultiSelectionBox::addItem(string item){
+	void yMultiSelectionBox::addItem(std::string item){
 		multi->addItem(item);
 	}
 	yMultiSelectionBox::~yMultiSelectionBox(){
 		delete multi;
 	}
-	void yMultiSelectionBox::selectedItems(vector<string> &list){
+	void yMultiSelectionBox::selectedItems(std::vector<std::string> &list){
 		slist = multi->selectedItems();
 		for(unsigned i=0;i<slist.size();i++){
 			list.push_back(slist.at(i)->label());
@@ -242,7 +242,7 @@ namespace UI{
 	}
 	void yTable::addItem(std::string item1,std::string item2){
 		table->addItem(new YTableItem(item1,item2));
-		i.push_back(std::make_pair<string,string> (item1,item2));	
+		i.push_back(std::make_pair<std::string,std::string> (item1,item2));	
 	}
 	void yTable::addItem(std::string n,std::string item1,std::string item2){
 		table->addItem(new YTableItem(n,item1,item2));
@@ -267,9 +267,9 @@ namespace UI{
 	void yTable::swap(int pos){
 		YItemConstIterator it=table->itemsBegin(),ic=table->itemsEnd()-1;
 		std::vector<P>::iterator ii = i.begin(),ir = i.begin();
-		std::pair<string,string> x;
+		std::pair<std::string,std::string> x;
 		std::cout<<"NAPANM:"<<table->itemsCount();
-		std::cout<<*ic<<'\t'<<table->selectedItem()<<endl;
+		std::cout<<*ic<<'\t'<<table->selectedItem()<<std::endl;
 		if(*ic==table->selectedItem() && pos >0) return;
 
 		while(it!=table->itemsEnd()){
@@ -301,7 +301,7 @@ namespace UI{
 		ii->second = x.second;
 		table->deleteAllItems();
 		for(ii=i.begin();ii!=i.end();ii++){
-			std::cout<<ii->first<<'\t'<<ii->second<<endl;
+			std::cout<<ii->first<<'\t'<<ii->second<<std::endl;
 		}
 		items = createList();
 		table->addItems(items);
@@ -313,7 +313,7 @@ namespace UI{
 		ii = i.begin();
 		if(table->columns()==2){
 			while(ii!=i.end()){
-				std::cout<<"inserting :"<<ii->first<<'\t'<<ii->second<<endl;
+				std::cout<<"inserting :"<<ii->first<<'\t'<<ii->second<<std::endl;
 				list.push_back(new YTableItem(ii->first,ii->second));
 				ii++;
 			}
@@ -332,7 +332,7 @@ namespace UI{
 	YTable* yTable::getElement(){
 		return table;
 	}
-	std::vector< std::pair<string,string> > yTable::getItems(){
+	std::vector< std::pair<std::string,std::string> > yTable::getItems(){
 		return i;
 	}
 
@@ -362,7 +362,7 @@ namespace UI{
 		b->setNotify(true);
 		buttonList.push_back(b);
 	}
-	string yRadioButtonGroup::selectedLabel(){
+        std::string yRadioButtonGroup::selectedLabel(){
 		return group->currentButton()->label();
 	}
 	bool yRadioButtonGroup::isButton(int index,YWidget* w){
@@ -380,13 +380,13 @@ namespace UI{
 		delete group;
 	}
 
-	yIntField::yIntField(yDialog* parent,string text,int min,int max,int value){
+	yIntField::yIntField(yDialog* parent,std::string text,int min,int max,int value){
 		field = YUI::widgetFactory()->createIntField(parent->getElement(),text,min,max,value);
 	}
-	yIntField::yIntField(yHLayout* parent,string text,int min,int max,int value){
+	yIntField::yIntField(yHLayout* parent,std::string text,int min,int max,int value){
 		field = YUI::widgetFactory()->createIntField(parent->getElement(),text,min,max,value);
 	}
-	yIntField::yIntField(yVLayout* parent,string text,int min,int max,int value){
+	yIntField::yIntField(yVLayout* parent,std::string text,int min,int max,int value){
 		field = YUI::widgetFactory()->createIntField(parent->getElement(),text,min,max,value);
 	}
 	int yIntField::value(){
@@ -406,15 +406,15 @@ namespace UI{
 		delete field;
 	}
 
-	yCheckBox::yCheckBox(yDialog * parent,string text,bool checked){
+	yCheckBox::yCheckBox(yDialog * parent,std::string text,bool checked){
 		cb = YUI::widgetFactory()->createCheckBox(parent->getElement(),text,checked);
 		cb->setNotify(true);
 	}
-	yCheckBox::yCheckBox(yHLayout * parent,string text,bool checked){
+	yCheckBox::yCheckBox(yHLayout * parent,std::string text,bool checked){
 		cb = YUI::widgetFactory()->createCheckBox(parent->getElement(),text,checked);
 		cb->setNotify(true);
 	}
-	yCheckBox::yCheckBox(yVLayout * parent,string text,bool checked){
+	yCheckBox::yCheckBox(yVLayout * parent,std::string text,bool checked){
 		cb = YUI::widgetFactory()->createCheckBox(parent->getElement(),text,checked);
 		cb->setNotify(true);
 	}
