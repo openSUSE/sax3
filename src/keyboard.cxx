@@ -429,7 +429,7 @@ bool keyboard::expertWriteConf(){
 	writeConf(line,true,"Identifier",false,"","SaXKeyBoardConf") ? cout<<"no error\n" : cout<<"error\n";
 	writeConf(line,false,"Option",true,"","XkbLayout") ? cout<<"no error\n" : cout<<"error\n";
 	writeConf(line,false,"Option",false,"/value",l.c_str()) ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",true,"","XkbVaraint") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","XkbVariant") ? cout<<"no error\n" : cout<<"error\n";
 	writeConf(line,false,"Option",false,"/value",v.c_str()) ? cout<<"no error\n" : cout<<"error\n";
 	writeConf(line,false,"Option",true,"","XkbOptions") ? cout<<"no error\n" : cout<<"error\n";
 	writeConf(line,false,"Option",false,"/value",g.c_str()) ? cout<<"no error\n" : cout<<"error\n";
