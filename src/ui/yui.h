@@ -4,26 +4,26 @@
 #include "ui.h"
 
 #define YUILogComponent "SaX3-UI-Lib-Log"
-#include "YUILog.h"
-#include "YUI.h"
-#include "YWidgetFactory.h"
-#include "YLayoutBox.h"
-#include "YDialog.h"
-#include "YEvent.h"
-#include "YPushButton.h"
-#include "YLabel.h"
-#include "YWidget.h"
-#include "YAlignment.h"
-#include "YImage.h"
-#include "YComboBox.h"
-#include "YMultiSelectionBox.h"
-#include "YItem.h"
-#include "YTable.h"
-#include "YTableHeader.h"
-#include "YRadioButtonGroup.h"
-#include "YRadioButton.h"
-#include "YIntField.h"
-#include "YCheckBox.h"
+#include <yui/YUILog.h>
+#include <yui/YUI.h>
+#include <yui/YWidgetFactory.h>
+#include <yui/YLayoutBox.h>
+#include <yui/YDialog.h>
+#include <yui/YEvent.h>
+#include <yui/YPushButton.h>
+#include <yui/YLabel.h>
+#include <yui/YWidget.h>
+#include <yui/YAlignment.h>
+#include <yui/YImage.h>
+#include <yui/YComboBox.h>
+#include <yui/YMultiSelectionBox.h>
+#include <yui/YItem.h>
+#include <yui/YTable.h>
+#include <yui/YTableHeader.h>
+#include <yui/YRadioButtonGroup.h>
+#include <yui/YRadioButton.h>
+#include <yui/YIntField.h>
+#include <yui/YCheckBox.h>
 
 #include<iostream>
 
