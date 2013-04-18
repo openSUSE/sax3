@@ -55,6 +55,7 @@ class Init{
 		UI::yVLayout * mainLayout = factory->createVLayout(dialog);
 		dp = opendir("/usr/share/sax3/modules.d/");
 		aug = aug_init(root,loadpath,flag);
+		aug_set(aug,"/augeas/load/Desktop/lens", "Desktop.lns");
 		aug_set(aug,"/augeas/load/Desktop/incl[last()+1]","/usr/share/sax3/modules.d/*");
 		err = aug_load(aug);
 		cout<<"------------------------------------------------------------------<<<"<<err<<">>>";
