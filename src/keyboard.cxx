@@ -11,6 +11,9 @@ extern "C"{
 #include<augeas.h>
 }
 
+#define YUILogComponent "SaX3-keyboard"
+#include <yui/YUILog.h>
+
 #include "ui/yuifactory.h"
 
 #include<iostream>
@@ -100,7 +103,7 @@ keyboard::keyboard(){
 				s1 = line.substr(0,pos);line.erase(0,pos);
 				pos=line.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 				line.erase(0,pos-1);				
-				cout<<s1<<'\t'<<line<<endl;
+				yuiDebug()<<s1<<'\t'<<line<<endl;
 				if(type==MODEL && line.length()!=0){
 					model[line]=s1;
 				}
@@ -122,7 +125,7 @@ keyboard::keyboard(){
 	aug = aug_init(root,loadpath,flag);
 	colNo=0;
 	if(aug==NULL){
-		cout<<"Cannot be opened";
+		yuiDebug()<<"Cannot be opened";
 	}
 
 }
@@ -253,7 +256,7 @@ bool keyboard::respondToEvent(){
 				char * temp = new char [20];
 				sprintf(temp,"%d",++colNo);
 				xcolNo = temp;
-				cout<<xcolNo;
+				yuiDebug()<<xcolNo;
 				layoutTable->addItem(xcolNo,layoutSelect->value(),variantSelect->value());
 			}
 			if(addGroup->getElement()==dialog->eventWidget()){
@@ -342,7 +345,7 @@ bool keyboard::writeConf(string &line,bool newNode,string parameter,bool isLastP
 		pathParam.append("[last()]");
 	}
 	pathParam.append(extraParam);
-	cout<<pathParam<<endl;
+	yuiDebug()<<pathParam<<endl;
 	error = aug_set(aug,pathParam.c_str(),value.c_str());
 	
 	if(error==-1)
@@ -366,9 +369,9 @@ bool keyboard::simpleWriteConf(){
 	subPath.assign("InputClass");
 	pos = line.find(subPath);
 	line.erase(pos+subPath.length(),line.size());
-	writeConf(line,true,"Identifier",false,"","SaXKeyBoardConf") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",false,"","XkbLayout") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",false,"/value",layoutVal.c_str()) ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,true,"Identifier",false,"","SaXKeyBoardConf") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",false,"","XkbLayout") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",false,"/value",layoutVal.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
 	error = aug_save(aug);
 	if(error==-1){
@@ -384,27 +387,27 @@ bool keyboard::expertWriteConf(){
 	lvg = layoutTable->getItems();
 	string l,v,g,m;
 	for(it=lvg.begin();it!=lvg.end();it++){
-		cout<<layout[it->first]<<'\t'<<variant[it->second]<<endl;
+		yuiDebug()<<layout[it->first]<<'\t'<<variant[it->second]<<endl;
 		l.append(layout[it->first]);l.push_back(',');
 		v.append(variant[it->second]);v.push_back(',');
 	}
 	l.erase(l.size()-1);
 	v.erase(v.size()-1);
-	cout<<l<<'\t'<<v<<endl;
+	yuiDebug()<<l<<'\t'<<v<<endl;
 	m = model[modelSelect->value()];
-	cout<<m<<endl;
+	yuiDebug()<<m<<endl;
 	lvg=groupTable->getItems();
 	for(it=lvg.begin();it!=lvg.end();it++){
 		for(it1=options.begin();it1!=options.end();it1++){	
 			if(it1->first==it->second){
-				cout<<it1->first<<'\t'<<it->second<<'\t'<<it1->second<<endl;
+				yuiDebug()<<it1->first<<'\t'<<it->second<<'\t'<<it1->second<<endl;
 				g.append(it1->second);g.push_back(',');
 				break;
 			}
 		}	
 	}
 	g.erase(g.size()-1);
-	cout<<g<<endl;
+	yuiDebug()<<g<<endl;
 
 	char **match;int i=0,j=0,pos=0;string line,subPath,pathParam;
 	int error;
@@ -423,16 +426,16 @@ bool keyboard::expertWriteConf(){
 	pos = line.find(subPath);
 	line.erase(pos+subPath.size(),line.size());
 
-	cout<<line<<endl;
-	cout<<subPath;
+	yuiDebug()<<line<<endl;
+	yuiDebug()<<subPath;
 
-	writeConf(line,true,"Identifier",false,"","SaXKeyBoardConf") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",true,"","XkbLayout") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",false,"/value",l.c_str()) ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",true,"","XkbVariant") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",false,"/value",v.c_str()) ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",true,"","XkbOptions") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Option",false,"/value",g.c_str()) ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,true,"Identifier",false,"","SaXKeyBoardConf") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",true,"","XkbLayout") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",false,"/value",l.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",true,"","XkbVariant") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",false,"/value",v.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",true,"","XkbOptions") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Option",false,"/value",g.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
 	error = aug_save(aug);
 	if(error==-1){
@@ -499,7 +502,7 @@ void keyboard::loadSimpleConf(){
 	map<string,string>::iterator it;
 	for(it=layout.begin();it!=layout.end();it++){
 		if(m==it->second){
-			cout<<it->first<<endl;
+			yuiDebug()<<it->first<<endl;
 			break;
 		}
 	}
@@ -576,7 +579,7 @@ skip:
 
 	map<string,string>::iterator it;
 	string var,lay;
-	cout<<"Checking for values"<<endl;	
+	yuiDebug()<<"Checking for values"<<endl;	
 	for(i=0;i<l.size();i++){
 		if(l[i]=="")continue;
 		for(it=layout.begin();it!=layout.end();it++){
@@ -587,12 +590,12 @@ skip:
 		}
 		for(it=variant.begin();it!=variant.end();it++){
 			if(v[i]=="Default"){
-				cout<<"Default"<<endl;
+				yuiDebug()<<"Default"<<endl;
 				var = "Default";
 				break;
 			}
 			 if(it->second==v[i]){
-				cout<<it->first<<endl;
+				yuiDebug()<<it->first<<endl;
 				var = it->first;
 				break;
 			}
@@ -607,12 +610,12 @@ skip:
 	for(i=0;i<o.size();i++){
 		for(it1=options.begin();it1!=options.end();it1++){	
 			if(o[i]==it1->second){
-				cout<<it1->second;
+				yuiDebug()<<it1->second;
 				gv = it1->first;
 				while(it1->second.find(':')!=string::npos){
 					--it1;
 				}
-				cout<<it1->second;
+				yuiDebug()<<it1->second;
 				gc= it1->first;
 				groupTable->addItem(gc,gv);
 				break;

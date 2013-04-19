@@ -3,6 +3,9 @@
 #include<iostream>
 #include<stdio.h>
 
+#define YUILogComponent "SaX3-yui"
+#include <yui/YUILog.h>
+
 namespace UI{
 
 	//YDIALOG FUNCTIONS START
@@ -268,8 +271,8 @@ namespace UI{
 		YItemConstIterator it=table->itemsBegin(),ic=table->itemsEnd()-1;
 		std::vector<P>::iterator ii = i.begin(),ir = i.begin();
 		std::pair<std::string,std::string> x;
-		std::cout<<"NAPANM:"<<table->itemsCount();
-		std::cout<<*ic<<'\t'<<table->selectedItem()<<std::endl;
+		yuiDebug()<<"NAPANM:"<<table->itemsCount();
+		yuiDebug()<<*ic<<'\t'<<table->selectedItem()<<std::endl;
 		if(*ic==table->selectedItem() && pos >0) return;
 
 		while(it!=table->itemsEnd()){
@@ -289,7 +292,7 @@ namespace UI{
 			}
 		}
 		if(pos<0){
-			std::cout<<"In HERE";
+			yuiDebug()<<"In HERE";
 			if(it==table->itemsBegin()) return;
 			while(it!=table->itemsEnd() && pos!=0){
 				--ii;--it;++pos;
@@ -301,7 +304,7 @@ namespace UI{
 		ii->second = x.second;
 		table->deleteAllItems();
 		for(ii=i.begin();ii!=i.end();ii++){
-			std::cout<<ii->first<<'\t'<<ii->second<<std::endl;
+			yuiDebug()<<ii->first<<'\t'<<ii->second<<std::endl;
 		}
 		items = createList();
 		table->addItems(items);
@@ -313,7 +316,7 @@ namespace UI{
 		ii = i.begin();
 		if(table->columns()==2){
 			while(ii!=i.end()){
-				std::cout<<"inserting :"<<ii->first<<'\t'<<ii->second<<std::endl;
+				yuiDebug()<<"inserting :"<<ii->first<<'\t'<<ii->second<<std::endl;
 				list.push_back(new YTableItem(ii->first,ii->second));
 				ii++;
 			}

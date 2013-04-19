@@ -8,6 +8,9 @@ extern "C"{
 #include<augeas.h>
 }
 
+#define YUILogComponent "SaX3-touchpad"
+#include <yui/YUILog.h>
+
 #include "ui/yuifactory.h"
 
 using namespace std;
@@ -39,10 +42,10 @@ class touchpad{
 touchpad::touchpad(){
 	factory = new UI::YUIFactory();
 	aug=NULL;root=NULL;flag=0;loadpath=NULL;
-	cout<<"Loading AUgeas";
+	yuiDebug()<<"Loading AUgeas";
 	aug = aug_init(root,loadpath,flag);
 	if(aug==NULL){
-		cout<<"AUGEAS NOT LOADED";
+		yuiDebug()<<"AUGEAS NOT LOADED";
 	}
 }
 
@@ -142,97 +145,97 @@ bool touchpad::saveConf(){
 	subPath.assign("InputClass");
 	pos = line.find(subPath);
 	line.erase(pos+subPath.length(),line.size());
-	writeConf(line,true,"Identifier",false,"","SaXTouchpadConf") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"Driver",false,"","synaptics") ? cout<<"no error\n" : cout<<"error\n";
-	writeConf(line,false,"MatchIsTouchpad",false,"","on") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,true,"Identifier",false,"","SaXTouchpadConf") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"Driver",false,"","synaptics") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	writeConf(line,false,"MatchIsTouchpad",false,"","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
 	
-	writeConf(line,false,"Option",true,"","TapButton1") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","TapButton1") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(TapButton1->isChecked()){
-		writeConf(line,false,"Option",false,"/value","1") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","1") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value",TapButton1Click->value().c_str()) ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value",TapButton1Click->value().c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 	
-	writeConf(line,false,"Option",true,"","TapButton2") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","TapButton2") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(TapButton1->isChecked()){
-		writeConf(line,false,"Option",false,"/value","2") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","2") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value",TapButton2Click->value().c_str()) ? cout<<"no error\n" : cout<<"error\n";
-	}
-
-	
-	writeConf(line,false,"Option",true,"","TapButton3") ? cout<<"no error\n" : cout<<"error\n";
-	if(TapButton1->isChecked()){
-		writeConf(line,false,"Option",false,"/value","3") ? cout<<"no error\n" : cout<<"error\n";
-	}else{
-		writeConf(line,false,"Option",false,"/value",TapButton3Click->value().c_str()) ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value",TapButton2Click->value().c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
 	
-	writeConf(line,false,"Option",true,"","VertEdgeScroll") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","TapButton3") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	if(TapButton1->isChecked()){
+		writeConf(line,false,"Option",false,"/value","3") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	}else{
+		writeConf(line,false,"Option",false,"/value",TapButton3Click->value().c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+	}
+
+	
+	writeConf(line,false,"Option",true,"","VertEdgeScroll") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(VerticalEdgeScroll->isChecked()){
-		writeConf(line,false,"Option",false,"/value","on") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value","off") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","off") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
-	writeConf(line,false,"Option",true,"","HorizEdgeScroll") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","HorizEdgeScroll") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(VerticalEdgeScroll->isChecked()){
-		writeConf(line,false,"Option",false,"/value","on") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value","off") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","off") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
-	writeConf(line,false,"Option",true,"","VertTwoFingerScroll") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","VertTwoFingerScroll") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(VerticalTwoFingerScroll->isChecked()){
-		writeConf(line,false,"Option",false,"/value","on") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value","off") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","off") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
 
-	writeConf(line,false,"Option",true,"","HorizTwoFingerScroll") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","HorizTwoFingerScroll") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(HorizontalTwoFingerScroll->isChecked()){
-		writeConf(line,false,"Option",false,"/value","on") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}else{
-		writeConf(line,false,"Option",false,"/value","off") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","off") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
-	writeConf(line,false,"Option",true,"","CircularScrolling") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,false,"Option",true,"","CircularScrolling") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	if(CircularScroll->isChecked()){
-		writeConf(line,false,"Option",false,"/value","on") ? cout<<"no error\n" : cout<<"error\n";
-		writeConf(line,false,"Option",false,"","CircScrollTrigger") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","on") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+		writeConf(line,false,"Option",false,"","CircScrollTrigger") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		if(!CircularLocation->value().compare("All Edges")){
-			writeConf(line,false,"Option",false,"/value","0") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","0") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Top Edges")){
-			writeConf(line,false,"Option",false,"/value","1") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","1") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Top Right Corner")){
-			writeConf(line,false,"Option",false,"/value","2") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","2") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Right Edge ")){
-			writeConf(line,false,"Option",false,"/value","3") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","3") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Bottom Right Corner")){
-			writeConf(line,false,"Option",false,"/value","4") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","4") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Bottom Edge")){
-			writeConf(line,false,"Option",false,"/value","5") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","5") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Bottom Left Corner")){
-			writeConf(line,false,"Option",false,"/value","6") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","6") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Left Edges")){
-			writeConf(line,false,"Option",false,"/value","7") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","7") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 		if(!CircularLocation->value().compare("Top Left Corner")){
-			writeConf(line,false,"Option",false,"/value","8") ? cout<<"no error\n" : cout<<"error\n";
+			writeConf(line,false,"Option",false,"/value","8") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 		}
 
 	}else{
-		writeConf(line,false,"Option",false,"/value","off") ? cout<<"no error\n" : cout<<"error\n";
+		writeConf(line,false,"Option",false,"/value","off") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	}
 
 	error = aug_save(aug);
@@ -259,7 +262,7 @@ bool touchpad::writeConf(string &line,bool newNode,string parameter,bool isLastP
 		pathParam.append("[last()]");
 	}
 	pathParam.append(extraParam);
-	cout<<pathParam<<endl;
+	yuiDebug()<<pathParam<<endl;
 	error = aug_set(aug,pathParam.c_str(),value.c_str());
 	
 	if(error==-1)

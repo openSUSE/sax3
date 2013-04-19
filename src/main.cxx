@@ -13,6 +13,9 @@ extern "C"{
 #include<augeas.h>
 }
 
+#define YUILogComponent "SaX3-launcher"
+#include <yui/YUILog.h>
+
 #include "ui/yuifactory.h"
 
 #define _(STRING) gettext(STRING)
@@ -58,17 +61,17 @@ class Init{
 		aug_set(aug,"/augeas/load/Desktop/lens", "Desktop.lns");
 		aug_set(aug,"/augeas/load/Desktop/incl[last()+1]","/usr/share/sax3/modules.d/*");
 		err = aug_load(aug);
-		cout<<"------------------------------------------------------------------<<<"<<err<<">>>";
+		yuiDebug()<<"------------------------------------------------------------------<<<"<<err<<">>>";
 		if(dp!=NULL){
-			cout<<"DP IF";
+			yuiDebug()<<"DP IF";
 			while(ep = readdir(dp)){
 				if(strcmp(ep->d_name,".") && strcmp(ep->d_name,"..")){
-					cout<<"__________________________________________________________"<<err<<endl;
+					yuiDebug()<<"__________________________________________________________"<<err<<endl;
 					UI::yHLayout * hLayout = factory->createHLayout(mainLayout);
 					getEntry = new char[300];
 					makeEntry("/files/usr/share/sax3/modules.d/",ep->d_name,"/*/Icon");
 					err = aug_get(aug,getEntry,&value);
-					cout<<getEntry;
+					yuiDebug()<<getEntry;
 					if(err==1)
 					image.push_back(factory->createImage(hLayout,_(value)));
 					delete getEntry;
@@ -86,7 +89,7 @@ class Init{
 					if(err==1)
 					execs.push_back(value);
 					
-//					cout<<value<<endl;
+//					yuiDebug()<<value<<endl;
 					delete getEntry;
 				}
 			}
@@ -98,7 +101,7 @@ class Init{
 				getEntry = new char[100];
 				string temp = button[i]->value();
 				temp.erase(temp.find('&'),temp.find('&'));
-				cout<<execs[i]<<endl;
+				yuiDebug()<<execs[i]<<endl;
 				err = execlp(execs[i].c_str(),NULL);//NULL,NULL);
 				break;
 			}

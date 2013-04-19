@@ -10,6 +10,9 @@ extern "C"{
 
 #include "ui/yuifactory.h"
 
+#define YUILogComponent "SaX3-mouse"
+#include <yui/YUILog.h>
+
 using namespace std;
 
 class Mouse{
@@ -246,7 +249,7 @@ void Mouse::saveState(){
 	}
 	d[i]->setEmulateWheelTimeout(wheeltimeout->value());
 	if(InvX->isChecked()){
-		cout<<"In here";
+		yuiDebug()<<"In here";
 		d[i]->setInvX(1);
 	}else{
 		d[i]->setInvX(0);
@@ -362,10 +365,10 @@ void Mouse::fillUpMouseList(){
 Mouse::Mouse(){
 	factory = new UI::YUIFactory();
 	aug=NULL;root=NULL;flag=0;loadpath=NULL;
-	cout<<"Loading AUgeas";
+	yuiDebug()<<"Loading AUgeas";
 	aug = aug_init(root,loadpath,flag);
 	if(aug==NULL){
-		cout<<"AUGEAS NOT LOADED";
+		yuiDebug()<<"AUGEAS NOT LOADED";
 	}
 
 }
@@ -375,7 +378,7 @@ bool Mouse::respondToEvent(){
 	while(1){
 		dialog->wait();
 		if(cancelButton->getElement()==dialog->eventWidget()){
-			cout<<"Exitting";
+			yuiDebug()<<"Exitting";
 			break;
 		}
 		if(okButton->getElement()==dialog->eventWidget()){
@@ -421,12 +424,12 @@ bool Mouse::saveConf(){
 	subPath.assign("InputClass");
 	pos = line.find(subPath);
 	line.erase(pos+subPath.length(),line.size());
-	cout<<endl<<line<<endl;
+	yuiDebug()<<endl<<line<<endl;
 
 	string Identifier = mouseList->value();
 	Identifier.append("-SaX-MouseConfig");
-	cout<<Identifier;
-	writeConf(line,true,"Identifier",false,"",Identifier.c_str()) ? cout<<"no error\n" : cout<<"error\n";
+	yuiDebug()<<Identifier;
+	writeConf(line,true,"Identifier",false,"",Identifier.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
 	for(unsigned i=0;i<d.size();i++){
 		if(mouseList->value()==d[i]->getName()){
@@ -434,45 +437,45 @@ bool Mouse::saveConf(){
 		}
 	}
 
-	writeConf(line,false,"MatchVendor",false,"",d[i]->getVendor().c_str()) ? cout<<"No Error\n" : cout<<"Error\n";
-	writeConf(line,false,"MatchProduct",false,"",d[i]->getProduct().c_str()) ? cout<<"No Error\n" : cout<<"Error\n";
-	writeConf(line,false,"MatchIsPointer",false,"","on") ? cout<<"No Error\n" : cout<<"Error\n";
-	writeConf(line,false,"Driver",false,"","mouse") ? cout<<"No Error\n" : cout<<"Error\n";
+	writeConf(line,false,"MatchVendor",false,"",d[i]->getVendor().c_str()) ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+	writeConf(line,false,"MatchProduct",false,"",d[i]->getProduct().c_str()) ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+	writeConf(line,false,"MatchIsPointer",false,"","on") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+	writeConf(line,false,"Driver",false,"","mouse") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
 	
 	if(button3->selectedLabel()=="&Yes"){
-		writeConf(line,false,"Option",true,"","Emulate3Buttons") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value","on")?cout<<"NoError\n":cout<<"Error\n";
-		writeConf(line,false,"Option",true,"","ChordMiddle") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value","on")?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","Emulate3Buttons") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value","on")?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",true,"","ChordMiddle") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value","on")?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 		char * s = new char[4];
 		sprintf(s,"%d",timeout->value());
-		writeConf(line,false,"Option",true,"","Emulate3Timeout") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value",s)?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","Emulate3Timeout") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value",s)?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 		
 	}
 	if(wheel->selectedLabel()=="Y&es"){
-		writeConf(line,false,"Option",true,"","EmulateWheel") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value","on")?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","EmulateWheel") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value","on")?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 		char * s = new char[4];
 		sprintf(s,"%d",wheeltimeout->value());
-		writeConf(line,false,"Option",true,"","EmulateWheelTimeout") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value",s)?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","EmulateWheelTimeout") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value",s)?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 		
 	}
 
 
 	if(InvX->isChecked()){
-		writeConf(line,false,"Option",true,"","InvX") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value","on")?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","InvX") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value","on")?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 	}
 	if(InvY->isChecked()){
-		writeConf(line,false,"Option",true,"","InvY") ? cout<<"No Error\n" : cout<<"Error\n";
-		writeConf(line,false,"Option",false,"/value","on")?cout<<"NoError\n":cout<<"Error\n";
+		writeConf(line,false,"Option",true,"","InvY") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+		writeConf(line,false,"Option",false,"/value","on")?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 	}
 
 	char *s = new char[3];sprintf(s,"%d",AngleOffset->value());
-	writeConf(line,false,"Option",true,"","AngleOffset") ? cout<<"No Error\n" : cout<<"Error\n";
-	writeConf(line,false,"Option",false,"/value",s)?cout<<"NoError\n":cout<<"Error\n";
+	writeConf(line,false,"Option",true,"","AngleOffset") ? yuiDebug()<<"No Error\n" : yuiDebug()<<"Error\n";
+	writeConf(line,false,"Option",false,"/value",s)?yuiDebug()<<"NoError\n":yuiDebug()<<"Error\n";
 	error = aug_save(aug);
 
 	if(error==-1){
@@ -497,7 +500,7 @@ bool Mouse::writeConf(string &line,bool newNode,string parameter,bool isLastPara
 		pathParam.append("[last()]");
 	}
 	pathParam.append(extraParam);
-	cout<<pathParam<<endl;
+	yuiDebug()<<pathParam<<endl;
 	error = aug_set(aug,pathParam.c_str(),value.c_str());
 	
 	if(error==-1)

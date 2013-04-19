@@ -1,6 +1,9 @@
 #include "yuifactory.h"
 #include "yui.h"
 
+#define YUILogComponent "SaX3-yui"
+#include <yui/YUILog.h>
+
 #include<iostream>
 
 namespace UI{

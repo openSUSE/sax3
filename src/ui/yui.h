@@ -3,8 +3,6 @@
 
 #include "ui.h"
 
-#define YUILogComponent "SaX3-UI-Lib-Log"
-#include <yui/YUILog.h>
 #include <yui/YUI.h>
 #include <yui/YWidgetFactory.h>
 #include <yui/YLayoutBox.h>

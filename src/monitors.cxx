@@ -10,6 +10,9 @@ extern "C"{
 #include<augeas.h>
 }
 
+#define YUILogComponent "SaX3-monitors"
+#include <yui/YUILog.h>
+
 #include"ui/yuifactory.h"
 
 using namespace std;
@@ -80,7 +83,7 @@ string Monitors::calculateCVT(){
 		}
 	}
 	cvt = cvt.substr(cvt.find(' ')+1,string::npos);
-	cout<<cvt;
+	yuiDebug()<<cvt;
 	return cvt;
 }
 void Monitors::fillUpDepthCombo(){
@@ -101,9 +104,9 @@ void Monitors::separateResolution(string &temp){
 void Monitors::detectResolution(){
 	string temp;int flag=0;
 	ifstream file("/tmp/sax-xrandr.tmp");
-	cout<<"IN DETECT RESOLUTION---->";
+	yuiDebug()<<"IN DETECT RESOLUTION---->";
 	if(file.is_open()){
-		cout<<"File opened";
+		yuiDebug()<<"File opened";
 		while(file.good()){
 			getline(file,temp);
 			if(temp.find(' ')!=0 && flag)
@@ -115,7 +118,7 @@ void Monitors::detectResolution(){
 			}
 		}
 	}else
-		cout<<"Not opened";
+		yuiDebug()<<"Not opened";
 
 }
 
@@ -126,10 +129,10 @@ void Monitors::fillUpDriverCombo(){
 Monitors::Monitors(){
         factory = new UI::YUIFactory();
         aug=NULL;root=NULL;flag=0;loadpath=NULL;
-        cout<<"Loading AUgeas";
+        yuiDebug()<<"Loading AUgeas";
         aug = aug_init(root,loadpath,flag);
         if(aug==NULL){
-              cout<<"AUGEAS NOT LOADED";
+              yuiDebug()<<"AUGEAS NOT LOADED";
         }
 }
 
@@ -148,7 +151,7 @@ void Monitors::detectDrivers(){
 		};
 	}
 	temp =temp.insert(0,"/tmp/");
-	cout<<temp;
+	yuiDebug()<<temp;
 	ifstream file(temp.c_str());
 	string temp1;
 	int pos,pos1;
@@ -159,7 +162,7 @@ void Monitors::detectDrivers(){
 			pos1 = temp1.find("/usr/lib/xorg/modules/drivers/");
 			string matched;
 			if(pos!=-1 || pos1!=-1){
-				cout<<endl<<"Found atleast one";
+				yuiDebug()<<endl<<"Found atleast one";
 				if(pos!=-1)
 					matched = "/usr/lib64/xorg/modules/drivers/";
 				if(pos1!=-1)
@@ -168,7 +171,7 @@ void Monitors::detectDrivers(){
 				temp1.erase(0,next_pos);
 				next_pos = temp1.find('_');
 				temp1.erase(next_pos,string::npos);
-				cout<<"\t"<<temp1<<endl;
+				yuiDebug()<<"\t"<<temp1<<endl;
 				driverList.push_back(temp1);
 			}
 		}
@@ -272,10 +275,10 @@ void Monitors::saveConf(){
         pos = line.find(subPath);
         line.erase(pos+subPath.length(),line.size());
 	
-	writeConf(line,true,"Identifier",false,"","SaX3-monitor") ? cout<<"no error\n" : cout<<"error\n";
+	writeConf(line,true,"Identifier",false,"","SaX3-monitor") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
 	if(enableAdvance->isChecked()){
-		cout<<"In Enable Advanced";
+		yuiDebug()<<"In Enable Advanced";
 		string horiz,vert;
 		char * temp = new char[10];
 		sprintf(temp,"%d",horizontalLow->value());
@@ -295,7 +298,7 @@ void Monitors::saveConf(){
 	
 	string cvt = calculateCVT();
 	
-	writeConf(line,false,"Modeline",false,"",cvt) ? cout<<"no error\n":cout<<"error\n";
+	writeConf(line,false,"Modeline",false,"",cvt) ? yuiDebug()<<"no error\n":yuiDebug()<<"error\n";
 
         cnt = aug_match(aug,"/files/etc/X11/xorg.conf.d/*/Device/*",&match);
 
@@ -312,10 +315,10 @@ void Monitors::saveConf(){
         subPath.assign("Device");
         pos = line.find(subPath);
         line.erase(pos+subPath.length(),line.size());
-        writeConf(line,true,"Identifier",false,"","SaX3-device") ? cout<<"no error\n" : cout<<"error\n";
+        writeConf(line,true,"Identifier",false,"","SaX3-device") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	string temp = driverCombo->value();
-	cout<<temp;
-        writeConf(line,false,"Driver",false,"",temp.c_str()) ? cout<<"no error\n" : cout<<"error\n";
+	yuiDebug()<<temp;
+        writeConf(line,false,"Driver",false,"",temp.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 
         cnt = aug_match(aug,"/files/etc/X11/xorg.conf.d/*/Screen/*",&match);
 
@@ -333,13 +336,13 @@ void Monitors::saveConf(){
         pos = line.find(subPath);
         line.erase(pos+subPath.length(),line.size());
 
-        writeConf(line,true,"Identifier",false,"","SaX3-screen") ? cout<<"no error\n" : cout<<"error\n";
-        writeConf(line,false,"Device",false,"","SaX3-device") ? cout<<"no error\n" : cout<<"error\n";
-        writeConf(line,false,"Monitor",false,"","SaX3-monitor") ? cout<<"no error\n" : cout<<"error\n";
-        writeConf(line,false,"DefaultDepth",false,"",depthCombo->value().c_str()) ? cout<<"no error\n" : cout<<"error\n";
-        writeConf(line,false,"Display",true,"/Depth",depthCombo->value().c_str()) ? cout<<"no error\n" : cout<<"error\n";
+        writeConf(line,true,"Identifier",false,"","SaX3-screen") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+        writeConf(line,false,"Device",false,"","SaX3-device") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+        writeConf(line,false,"Monitor",false,"","SaX3-monitor") ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+        writeConf(line,false,"DefaultDepth",false,"",depthCombo->value().c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
+        writeConf(line,false,"Display",true,"/Depth",depthCombo->value().c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	string mode = resolutionCombo->value();mode.append("_60.00");
-        writeConf(line,false,"Display",false,"/Modes",mode.c_str()) ? cout<<"no error\n" : cout<<"error\n";
+        writeConf(line,false,"Display",false,"/Modes",mode.c_str()) ? yuiDebug()<<"no error\n" : yuiDebug()<<"error\n";
 	aug_save(aug);
 }
 
@@ -359,7 +362,7 @@ bool Monitors::writeConf(string &line,bool newNode,string parameter,bool isLastP
                 pathParam.append("[last()]");
         }
         pathParam.append(extraParam);
-        cout<<pathParam<<endl;
+        yuiDebug()<<pathParam<<endl;
         error = aug_set(aug,pathParam.c_str(),value.c_str());
 
         if(error==-1)
