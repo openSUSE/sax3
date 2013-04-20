@@ -3,48 +3,61 @@
 
 #include<iostream>
 
-namespace UI{
+namespace UI
+{
 
-	class Dialog;
-	class HLayout;
-	class VLayout;
-	class Label;
-	class PushButton;
-	class Image;
-	class RadioButtonGroup;
-	class IntField;
-	class CheckBox;
+class Dialog;
+class HLayout;
+class VLayout;
+class Label;
+class PushButton;
+class Image;
+class RadioButtonGroup;
+class IntField;
+class CheckBox;
 
-	class CheckBox{
-	};
-	class IntField{
-	};
-	class Image{
-	};
+class CheckBox
+{
+};
+class IntField
+{
+};
+class Image
+{
+};
 
-	class PushButton{
-	};
+class PushButton
+{
+};
 
-	class Dialog {
-	};
+class Dialog
+{
+};
 
-	class HLayout{
-	};
+class HLayout
+{
+};
 
-	class VLayout{
-	};
+class VLayout
+{
+};
 
-	class Label{
-	};
+class Label
+{
+};
 
-	class ComboBox{
-	};
-	class MultiSelectionBox{
-	};
-	class Table{
-	};
-	class RadioButtonGroup{
-	};
+class ComboBox
+{
+};
+class MultiSelectionBox
+{
+};
+class Table
+{
+};
+class RadioButtonGroup
+{
+};
 }
 
 #endif

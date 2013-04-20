@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-extern "C"{
+extern "C" {
 #include <augeas.h>
 }
 
@@ -31,14 +31,14 @@ extern "C"{
 
 #define _(STRING) gettext(STRING)
 #define get_smt(WHAT, WHERE) \
-			strncpy(start, (WHAT), strlen(WHAT)+1);\
-			yuiDebug() << "Searching for '" << matches[i] << "'" << endl;\
-			if(aug_get(aug,matches[i],(WHERE)) < 1) {\
-				yuiError() << _("Cannot get ") << WHAT << "!" << endl;\
-				yuiError() << aug_error_message(aug) << endl;\
-				ret = false;\
-				goto matches_cleanup;\
-			}
+         strncpy(start, (WHAT), strlen(WHAT)+1);\
+         yuiDebug() << "Searching for '" << matches[i] << "'" << endl;\
+         if(aug_get(aug,matches[i],(WHERE)) < 1) {\
+            yuiError() << _("Cannot get ") << WHAT << "!" << endl;\
+            yuiError() << aug_error_message(aug) << endl;\
+            ret = false;\
+            goto matches_cleanup;\
+         }
 
 
 using namespace std;
@@ -53,190 +53,192 @@ using namespace std;
  *
  */
 
-class Chooser {
+class Chooser
+{
 protected:
-	//! Main dialog that shows modules
-	YDialog *dialog;
-	//! Mapping between widgets IDs and execute actions
-	map<YWidgetID *,string> entities;
+   //! Main dialog that shows modules
+   YDialog *dialog;
+   //! Mapping between widgets IDs and execute actions
+   map<YWidgetID *,string> entities;
 public:
-	//! Constructor
-	Chooser() {
-		dialog = NULL;
-	}
-	//! Loads list of modules and prepares UI
-	bool load() {
-		bool ret = true;
-		int i = 0;
+   //! Constructor
+   Chooser() {
+      dialog = NULL;
+   }
+   //! Loads list of modules and prepares UI
+   bool load() {
+      bool ret = true;
+      int i = 0;
 
-		// UI
+      // UI
 
-		// Something to help us create a widgets
-		YWidgetFactory *factory;
-		factory = YUI::widgetFactory();
+      // Something to help us create a widgets
+      YWidgetFactory *factory;
+      factory = YUI::widgetFactory();
 
-		// Prepare basic UI - stretchable and centered
-		dialog = factory->createPopupDialog();
-		YLayoutBox *horizontal = factory->createHBox(dialog);
-		factory->createHStretch(horizontal);
-		factory->createHSpacing(horizontal);
-		YLayoutBox *vertical = factory->createVBox(horizontal);
-		factory->createHSpacing(horizontal);
-		factory->createHStretch(horizontal);
+      // Prepare basic UI - stretchable and centered
+      dialog = factory->createPopupDialog();
+      YLayoutBox *horizontal = factory->createHBox(dialog);
+      factory->createHStretch(horizontal);
+      factory->createHSpacing(horizontal);
+      YLayoutBox *vertical = factory->createVBox(horizontal);
+      factory->createHSpacing(horizontal);
+      factory->createHStretch(horizontal);
 
-		// Augeas
-		augeas * aug = NULL;
-		aug = aug_init(NULL, NULL, AUG_NO_LOAD);
-		if(aug == NULL) {
-			yuiError() << _("Augeas init failed!") << endl;
-			return false;
-		}
-		// Load desktop lense
-		if(aug_set(aug,"/augeas/load/Desktop/lens", "Desktop.lns") != 0) {
-			yuiError() << _("Cannot load desktop lense!") << endl;
-			yuiError() << aug_error_message(aug) << endl;
-			ret = false;
-			goto aug_cleanup;
-		}
-		// Set path to our modules
-		if(aug_set(aug,"/augeas/load/Desktop/incl[last()+1]",
-			            "/usr/share/sax3/modules.d/*.desktop") != 0 ) {
-			yuiError() << _("Cannot set path to our desktop files!") << endl;
-			yuiError() << aug_error_message(aug) << endl;
-			ret = false;
-			goto aug_cleanup;
-		}
-		// Load them
-		if(aug_load(aug) != 0) {
-			yuiError() << _("Cannot reload augeas!") << endl;
-			yuiError() << aug_error_message(aug) << endl;
-			ret = false;
-			goto aug_cleanup;
-		}
-		// Get all available modules
-		int entries;
-		char **matches;
-		entries = aug_match(aug,"/files/usr/share/sax3/modules.d/*/DesktopEntry/Comment",&matches);
-		yuiDebug() << string("Number of modules I have found: ") << entries << endl;
-		yuiDebug() << string("Modules I have found: ") << endl;
-		if(YUILog::debugLoggingEnabled()) {
-			for(i = 0; i<entries;i++) {
-				yuiDebug() << matches[i];
-				yuiDebug() << endl;
-			}
-		}
+      // Augeas
+      augeas * aug = NULL;
+      aug = aug_init(NULL, NULL, AUG_NO_LOAD);
+      if(aug == NULL) {
+         yuiError() << _("Augeas init failed!") << endl;
+         return false;
+      }
+      // Load desktop lense
+      if(aug_set(aug,"/augeas/load/Desktop/lens", "Desktop.lns") != 0) {
+         yuiError() << _("Cannot load desktop lense!") << endl;
+         yuiError() << aug_error_message(aug) << endl;
+         ret = false;
+         goto aug_cleanup;
+      }
+      // Set path to our modules
+      if(aug_set(aug,"/augeas/load/Desktop/incl[last()+1]",
+                 "/usr/share/sax3/modules.d/*.desktop") != 0 ) {
+         yuiError() << _("Cannot set path to our desktop files!") << endl;
+         yuiError() << aug_error_message(aug) << endl;
+         ret = false;
+         goto aug_cleanup;
+      }
+      // Load them
+      if(aug_load(aug) != 0) {
+         yuiError() << _("Cannot reload augeas!") << endl;
+         yuiError() << aug_error_message(aug) << endl;
+         ret = false;
+         goto aug_cleanup;
+      }
+      // Get all available modules
+      int entries;
+      char **matches;
+      entries = aug_match(aug,"/files/usr/share/sax3/modules.d/*/DesktopEntry/Comment",&matches);
+      yuiDebug() << string("Number of modules I have found: ") << entries << endl;
+      yuiDebug() << string("Modules I have found: ") << endl;
+      if(YUILog::debugLoggingEnabled()) {
+         for(i = 0; i<entries; i++) {
+            yuiDebug() << matches[i];
+            yuiDebug() << endl;
+         }
+      }
 
-		// Prepare everything
-		char* start;
-		const char* name;
-		const char* help;
-		const char* exec;
-		const char* icon;
-		YIconButton* button;
-		factory->createVStretch(vertical);
+      // Prepare everything
+      char* start;
+      const char* name;
+      const char* help;
+      const char* exec;
+      const char* icon;
+      YIconButton* button;
+      factory->createVStretch(vertical);
 
-		// Go through all the modules and load them
-		for(i = 0; i < entries; i++) {
-			start = strrchr(matches[i],'/');
-			start++;
-			factory->createVSpacing(vertical, 0.25);
+      // Go through all the modules and load them
+      for(i = 0; i < entries; i++) {
+         start = strrchr(matches[i],'/');
+         start++;
+         factory->createVSpacing(vertical, 0.25);
 
-			// Load image
-			get_smt("Icon",&icon);
+         // Load image
+         get_smt("Icon",&icon);
 
-			// Load name
-			get_smt("Name",&name);
+         // Load name
+         get_smt("Name",&name);
 
-			// Load exec
-			get_smt("Exec",&exec);
+         // Load exec
+         get_smt("Exec",&exec);
 
-			// Load help string
-			get_smt("Comment",&help);
+         // Load help string
+         get_smt("Comment",&help);
 
-			// Little debugging info
-			yuiDebug() << "Got element '"       << name << "'" << endl;
-			yuiDebug() << "Icon is '"           << icon << "'" << endl;
-			yuiDebug() << "And executable is '" << exec << "'" << endl;
+         // Little debugging info
+         yuiDebug() << "Got element '"       << name << "'" << endl;
+         yuiDebug() << "Icon is '"           << icon << "'" << endl;
+         yuiDebug() << "And executable is '" << exec << "'" << endl;
 
-			// Create button and register appropriate action
-			button = factory->createIconButton(vertical, icon, _(name));
-			button->setHelpText(_(help));
-			entities.insert(make_pair(button->id(), exec));
+         // Create button and register appropriate action
+         button = factory->createIconButton(vertical, icon, _(name));
+         button->setHelpText(_(help));
+         entities.insert(make_pair(button->id(), exec));
 
-		}
+      }
 
-		// Add spacing and Quit button
-		factory->createVSpacing(vertical);
-		factory->createPushButton(vertical, _("Quit"))->setRole(YCancelButton);
-		factory->createVSpacing(vertical, 0.25);
-		factory->createVStretch(vertical);
-		dialog->recalcLayout();
+      // Add spacing and Quit button
+      factory->createVSpacing(vertical);
+      factory->createPushButton(vertical, _("Quit"))->setRole(YCancelButton);
+      factory->createVSpacing(vertical, 0.25);
+      factory->createVStretch(vertical);
+      dialog->recalcLayout();
 
-		// Deallocate found modules
+      // Deallocate found modules
 matches_cleanup:
-		for(i = 0; i<entries;i++) {
-			free(matches[i]);
-		}
-		free(matches);
+      for(i = 0; i<entries; i++) {
+         free(matches[i]);
+      }
+      free(matches);
 
-		// Close Augeas
+      // Close Augeas
 aug_cleanup:
-		aug_close(aug);
-		return ret;
-	}
+      aug_close(aug);
+      return ret;
+   }
 
 
-	//! Runs event processing loop and calls whatever is needed
-	void exec() {
-		YEvent *event = NULL;
-		dialog->open();
-		map<YWidgetID * ,string>::iterator it;
+   //! Runs event processing loop and calls whatever is needed
+   void exec() {
+      YEvent *event = NULL;
+      dialog->open();
+      map<YWidgetID * ,string>::iterator it;
 
-		// Wait for event
-		while(event = dialog->waitForEvent()) {
-			yuiDebug() << "Experienced event type " << YEvent::toString(event->eventType()) << endl;
+      // Wait for event
+      while(event = dialog->waitForEvent()) {
+         yuiDebug() << "Experienced event type " << YEvent::toString(event->eventType()) << endl;
 
-			// Closed window
-			if(event->eventType() == YEvent::CancelEvent) {
-				yuiDebug() << "Dialog canceled" << endl;
-				break;
-			}
+         // Closed window
+         if(event->eventType() == YEvent::CancelEvent) {
+            yuiDebug() << "Dialog canceled" << endl;
+            break;
+         }
 
-			// Quit pressed
-			if(((YPushButton*)(event->widget()))->role() == YCancelButton) {
-				yuiDebug() << "User quit" << endl;
-				break;
-			}
+         // Quit pressed
+         if(((YPushButton*)(event->widget()))->role() == YCancelButton) {
+            yuiDebug() << "User quit" << endl;
+            break;
+         }
 
-			// Module selected
-			if((it=entities.find(event->widget()->id())) != entities.end()) {
-				dialog->setDisabled();
-				system(it->second.c_str());
-				dialog->setEnabled();
-			}
-		}
+         // Module selected
+         if((it=entities.find(event->widget()->id())) != entities.end()) {
+            dialog->setDisabled();
+            system(it->second.c_str());
+            dialog->setEnabled();
+         }
+      }
 
-		// Close dialog
-		dialog->destroy();
-	}
+      // Close dialog
+      dialog->destroy();
+   }
 };
 
 // Main loop
-int main(){
+int main()
+{
 
-	// Set up locales
-	setlocale(LC_ALL,"");
-	bindtextdomain("sax3","/usr/share/locale");
-	textdomain("sax3");
-	YUI::app()->setApplicationTitle("SaX 3");
+   // Set up locales
+   setlocale(LC_ALL,"");
+   bindtextdomain("sax3","/usr/share/locale");
+   textdomain("sax3");
+   YUI::app()->setApplicationTitle("SaX 3");
 
-	// Enable debugging
-	YUILog::enableDebugLogging();
+   // Enable debugging
+   YUILog::enableDebugLogging();
 
-	// Run it
-	Chooser ui;
-	if(ui.load())
-		ui.exec();
+   // Run it
+   Chooser ui;
+   if(ui.load())
+      ui.exec();
 
-	return 0;
+   return 0;
 }
