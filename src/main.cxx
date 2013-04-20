@@ -30,6 +30,16 @@ extern "C"{
 #include <yui/YPushButton.h>
 
 #define _(STRING) gettext(STRING)
+#define get_smt(WHAT, WHERE) \
+			strncpy(start, (WHAT), strlen(WHAT)+1);\
+			yuiDebug() << "Searching for '" << matches[i] << "'" << endl;\
+			if(aug_get(aug,matches[i],(WHERE)) < 1) {\
+				yuiError() << _("Cannot get ") << WHAT << "!" << endl;\
+				yuiError() << aug_error_message(aug) << endl;\
+				ret = false;\
+				goto matches_cleanup;\
+			}
+
 
 using namespace std;
 
@@ -126,50 +136,22 @@ public:
 		factory->createVStretch(vertical);
 
 		// Go through all the modules and load them
-      for(i = 0; i < entries; i++) {
+		for(i = 0; i < entries; i++) {
 			start = strrchr(matches[i],'/');
 			start++;
 			factory->createVSpacing(vertical, 0.25);
 
 			// Load image
-			strncpy(start,"Icon",5);
-			yuiDebug() << "Searching for '" << string(matches[i]) << "'" << endl;
-			if(aug_get(aug,matches[i],&(icon)) < 1) {
-				yuiError() << _("Cannot get icon path!") << endl;
-				yuiError() << aug_error_message(aug) << endl;
-				ret = false;
-				goto matches_cleanup;
-			}
+			get_smt("Icon",&icon);
 
 			// Load name
-			strncpy(start,"Name",5);
-			yuiDebug() << "Searching for '" << string(matches[i]) << "'" << endl;
-			if(aug_get(aug,matches[i],&(name)) < 1) {
-				yuiError() << _("Cannot get name!") << endl;
-				yuiError() << aug_error_message(aug) << endl;
-				ret = false;
-				goto matches_cleanup;
-			}
+			get_smt("Name",&name);
 
 			// Load exec
-			strncpy(start,"Exec",5);
-			yuiDebug() << "Searching for '" << string(matches[i]) << "'" << endl;
-			if(aug_get(aug,matches[i],&(exec)) < 1) {
-				yuiError() << _("Cannot get name!") << endl;
-				yuiError() << aug_error_message(aug) << endl;
-				ret = false;
-				goto matches_cleanup;
-			}
+			get_smt("Exec",&exec);
 
 			// Load help string
-			strncpy(start,"Comment",5);
-			yuiDebug() << "Searching for '" << string(matches[i]) << "'" << endl;
-			if(aug_get(aug,matches[i],&(help)) < 1) {
-				yuiError() << _("Cannot get name!") << endl;
-				yuiError() << aug_error_message(aug) << endl;
-				ret = false;
-				goto matches_cleanup;
-			}
+			get_smt("Comment",&help);
 
 			// Little debugging info
 			yuiDebug() << "Got element '"       << name << "'" << endl;
