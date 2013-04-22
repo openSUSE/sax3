@@ -87,8 +87,10 @@ class Mouse
    bool writeConf(string &line,bool newNode,string parameter,bool isLastParameter,string extraParam,string value);
    void loadState();
    void saveState();
+   void add_hw_mouse(char* mouse);
 public:
    void autodetect();
+   void load_conf();
    void initUI();
    bool saveConf();
    bool respondToEvent();
@@ -311,43 +313,52 @@ void Mouse::getName()
    d.back()->setName(n);
 }
 
+//! Adds mouse based on entries in sysfs
+void Mouse::add_hw_mouse(char* mouse) {
+   ifstream myfile;
+   string device;
 
+   fileName  = "/sys/class/input/";
+   fileName += mouse;
+   fileName += "/device/uevent";
+   yuiDebug()<<"Got mouse " << mouse << endl;
+   myfile.open(fileName.c_str());
+   if(myfile.is_open()) {
+      d.push_back(new Details());
+      // TODO: read correct device
+      device = "/dev/input/";
+      device+= mouse;
+      d.back()->setDevice(device);
+      while(myfile.good()) {
+         getline(myfile,line);
+         if(!line.find("PRODUCT"))
+            getProductVendor();
+         if(!line.find("NAME"))
+            getName();
+         }
+    }
+    myfile.close();
+}
+
+//! Tries to find all mouses from sysfs and load them
 void Mouse::autodetect()
 {
    DIR* base;
    struct dirent* to_test;
-   ifstream myfile;
-   string device;
 
    base = opendir("/sys/class/input");
 
    while((to_test = readdir(base)) != NULL) {
       yuiDebug()<<"Testing possible mouse " << to_test->d_name << endl;
       if(strncmp(to_test->d_name, "mouse", 5)==0) {
-         fileName  = "/sys/class/input/";
-         fileName += to_test->d_name;
-         fileName += "/device/uevent";
-         yuiDebug()<<"Got mouse " << fileName.c_str() << endl;
-         myfile.open(fileName.c_str());
-         if(myfile.is_open()) {
-            d.push_back(new Details());
-            // TODO: read correct device
-            device = "/dev/input/";
-            device+= to_test->d_name;
-            d.back()->setDevice(device);
-            while(myfile.good()) {
-               getline(myfile,line);
-               if(!line.find("PRODUCT"))
-                  getProductVendor();
-               if(!line.find("NAME"))
-                  getName();
-            }
-         }
-         myfile.close();
+         add_hw_mouse(to_test->d_name);
       }
    }
 
    closedir(base);
+}
+
+void Mouse::load_conf() {
 }
 
 void Mouse::initUI()
@@ -583,10 +594,11 @@ int main()
    // Enable debugging
    YUILog::enableDebugLogging();
 
-   Mouse * m = new Mouse();
-   m->autodetect();
-   m->initUI();
-   m->respondToEvent();
-   delete m;
+   // Do stuff
+   Mouse m;
+   m.load_conf();
+   m.autodetect();
+   m.initUI();
+   m.respondToEvent();
    return 0;
 }
