@@ -1,17 +1,24 @@
-#include<iostream>
-#include<vector>
-#include<utility>
-#include<fstream>
-#include<string.h>
-#include<cstdio>
+#include <iostream>
+#include <locale.h>
+#include <libintl.h>
+#include <vector>
+#include <utility>
+#include <fstream>
+#include <string.h>
+#include <cstdio>
+#include <sys/types.h>
+#include <dirent.h>
 extern "C" {
-#include<augeas.h>
+#include <augeas.h>
 }
 
 #include "ui/yuifactory.h"
 
 #define YUILogComponent "SaX3-mouse"
 #include <yui/YUILog.h>
+#include <yui/YApplication.h>
+
+#define _(STRING) gettext(STRING)
 
 using namespace std;
 
@@ -304,31 +311,43 @@ void Mouse::getName()
    d.back()->setName(n);
 }
 
+
 void Mouse::autodetect()
 {
-   fileName = "/sys/class/input/mouse0/device/uevent";
+   DIR* base;
+   struct dirent* to_test;
    ifstream myfile;
-   string::iterator it;
+   string device;
 
-   for(int i=0; i<=9; i++) {
-      fileName.replace(fileName.begin()+22,fileName.begin()+23,1,'0'+i);
-      myfile.open(fileName.c_str());
-      if(myfile.is_open()) {
-         d.push_back(new Details());
-         string device = "/dev/mouse";
-         device.push_back('0'+i);
-         d.back()->setDevice(device);
-         while(myfile.good()) {
-            getline(myfile,line);
-            if(!line.find("PRODUCT"))
-               getProductVendor();
-            if(!line.find("NAME"))
-               getName();
+   base = opendir("/sys/class/input");
+
+   while((to_test = readdir(base)) != NULL) {
+      yuiDebug()<<"Testing possible mouse " << to_test->d_name << endl;
+      if(strncmp(to_test->d_name, "mouse", 5)==0) {
+         fileName  = "/sys/class/input/";
+         fileName += to_test->d_name;
+         fileName += "/device/uevent";
+         yuiDebug()<<"Got mouse " << fileName.c_str() << endl;
+         myfile.open(fileName.c_str());
+         if(myfile.is_open()) {
+            d.push_back(new Details());
+            // TODO: read correct device
+            device = "/dev/input/";
+            device+= to_test->d_name;
+            d.back()->setDevice(device);
+            while(myfile.good()) {
+               getline(myfile,line);
+               if(!line.find("PRODUCT"))
+                  getProductVendor();
+               if(!line.find("NAME"))
+                  getName();
+            }
          }
+         myfile.close();
       }
-      myfile.close();
-
    }
+
+   closedir(base);
 }
 
 void Mouse::initUI()
@@ -555,6 +574,15 @@ bool Mouse::writeConf(string &line,bool newNode,string parameter,bool isLastPara
 
 int main()
 {
+   // Set up locales
+   setlocale(LC_ALL,"");
+   bindtextdomain("sax3","/usr/share/locale");
+   textdomain("sax3");
+   YUI::app()->setApplicationTitle(_("SaX 3: Mouse configuration"));
+
+   // Enable debugging
+   YUILog::enableDebugLogging();
+
    Mouse * m = new Mouse();
    m->autodetect();
    m->initUI();
