@@ -624,8 +624,8 @@ skip:
 int main(){
 	
 	setlocale(LC_ALL,"");
-	bindtextdomain("sax3","/usr/share/locale");
-	textdomain("sax3");
+	bindtextdomain("sax3-keyboard","/usr/share/locale");
+	textdomain("sax3-keyboard");
 
 	keyboard * kb = new keyboard();
 	kb->drawLayout();
