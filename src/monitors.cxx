@@ -6,12 +6,16 @@
 #include<stdio.h>
 #include<fstream>
 #include<vector>
+#include<locale.h>
+#include<libintl.h>
+
 extern "C"{
 #include<augeas.h>
 }
 
 #include"ui/yuifactory.h"
 
+#define _(STRING) gettext(STRING)
 using namespace std;
 
 class Monitors{
@@ -180,38 +184,38 @@ void Monitors::detectDrivers(){
 void Monitors::initUI(){
 	dialog = factory->createDialog(60,12);
 	vL1 = factory->createVLayout(dialog);
-	driverCombo = factory->createComboBox(vL1,"Select the driver");	
+	driverCombo = factory->createComboBox(vL1,_("Select the driver"));	
 	fillUpDriverCombo();
 	vL2 = factory->createVLayout(vL1);
 	hL1 = factory->createHLayout(vL2);
-	resolutionCombo = factory->createComboBox(hL1,"Select resolution");
+	resolutionCombo = factory->createComboBox(hL1,_("Select resolution"));
 	fillUpResolutionCombo();
-	depthCombo = factory->createComboBox(hL1,"Depth");
+	depthCombo = factory->createComboBox(hL1,_("Depth"));
 	fillUpDepthCombo();
-	enableAdvance = factory->createCheckBox(vL1,"Enable Advanced Settings",false);
+	enableAdvance = factory->createCheckBox(vL1,_("Enable Advanced Settings"),false);
 	
 	hL2 = factory->createHLayout(vL1);
-	horizontalLow = factory->createIntField(hL2,"Horizontal Sync Rate(min value)",30,100,50);
+	horizontalLow = factory->createIntField(hL2,_("Horizontal Sync Rate(min value)"),30,100,50);
 	horizontalLow->setDisabled();
-	horizontalHigh = factory->createIntField(hL2,"Horizontal Sync Rate(max value)",30,100,50);
+	horizontalHigh = factory->createIntField(hL2,_("Horizontal Sync Rate(max value)"),30,100,50);
 	horizontalHigh->setDisabled();
 	hL3 = factory->createHLayout(vL1);
-	verticalLow = factory->createIntField(hL3,"Vertical Refresh Rate(min value)",50,120,70);
+	verticalLow = factory->createIntField(hL3,_("Vertical Refresh Rate(min value)"),50,120,70);
 	verticalLow->setDisabled();
-	verticalHigh = factory->createIntField(hL3,"Vertical Refresh Rate(max value)",50,120,70);
+	verticalHigh = factory->createIntField(hL3,_("Vertical Refresh Rate(max value)"),50,120,70);
 	verticalHigh->setDisabled();
 	
-	customCVT = factory->createCheckBox(vL1,"I want my own CVT",false);
+	customCVT = factory->createCheckBox(vL1,_("I want my own CVT"),false);
 	hL5 = factory->createHLayout(vL1);
-	xAxis = factory->createIntField(hL5,"X Axis",400,1280,4000);
+	xAxis = factory->createIntField(hL5,_("X Axis"),400,1280,4000);
 	xAxis->setDisabled();
-	yAxis = factory->createIntField(hL5,"Y Axis",400,1280,3000);
+	yAxis = factory->createIntField(hL5,_("Y Axis"),400,1280,3000);
 	yAxis->setDisabled();
-	refreshRate = factory->createIntField(hL5,"Refresh Rate",20,60,200);
+	refreshRate = factory->createIntField(hL5,_("Refresh Rate"),20,60,200);
 	refreshRate->setDisabled();
 	hL4 = factory->createHLayout(vL1);
-	ok = factory->createPushButton(hL4,"Ok");
-	cancel = factory->createPushButton(hL4,"Cancel");
+	ok = factory->createPushButton(hL4,_("Ok"));
+	cancel = factory->createPushButton(hL4,_("Cancel"));
 }
 
 bool Monitors::respondToEvent(){
@@ -369,6 +373,9 @@ bool Monitors::writeConf(string &line,bool newNode,string parameter,bool isLastP
 
 
 int main(){
+    setlocale(LC_ALL,"");
+    bindtextdomain("sax3-monitor","/usr/share/locale");
+    textdomain("sax3-monitor");
 	Monitors * m = new Monitors();
 	m->detectDrivers();
 	m->detectResolution();

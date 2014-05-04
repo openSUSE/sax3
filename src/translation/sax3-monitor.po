@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-04 17:42+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: monitors.cxx:218
+msgid "Cancel"
+msgstr ""
+
+#: monitors.cxx:193
+msgid "Depth"
+msgstr ""
+
+#: monitors.cxx:195
+msgid "Enable Advanced Settings"
+msgstr ""
+
+#: monitors.cxx:200
+msgid "Horizontal Sync Rate(max value)"
+msgstr ""
+
+#: monitors.cxx:198
+msgid "Horizontal Sync Rate(min value)"
+msgstr ""
+
+#: monitors.cxx:208
+msgid "I want my own CVT"
+msgstr ""
+
+#: monitors.cxx:217
+msgid "Ok"
+msgstr ""
+
+#: monitors.cxx:214
+msgid "Refresh Rate"
+msgstr ""
+
+#: monitors.cxx:191
+msgid "Select resolution"
+msgstr ""
+
+#: monitors.cxx:187
+msgid "Select the driver"
+msgstr ""
+
+#: monitors.cxx:205
+msgid "Vertical Refresh Rate(max value)"
+msgstr ""
+
+#: monitors.cxx:203
+msgid "Vertical Refresh Rate(min value)"
+msgstr ""
+
+#: monitors.cxx:210
+msgid "X Axis"
+msgstr ""
+
+#: monitors.cxx:212
+msgid "Y Axis"
+msgstr ""

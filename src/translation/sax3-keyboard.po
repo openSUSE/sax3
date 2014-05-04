@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-04 17:29+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: keyboard.cxx:155 keyboard.cxx:190
+msgid "&Cancel"
+msgstr ""
+
+#: keyboard.cxx:173
+msgid "&Down"
+msgstr ""
+
+#: keyboard.cxx:154 keyboard.cxx:189
+msgid "&Ok"
+msgstr ""
+
+#: keyboard.cxx:188
+msgid "&Simple Mode"
+msgstr ""
+
+#: keyboard.cxx:172
+msgid "&Up"
+msgstr ""
+
+#: keyboard.cxx:168 keyboard.cxx:183
+msgid "Add"
+msgstr ""
+
+#: keyboard.cxx:179
+msgid "Category"
+msgstr ""
+
+#: keyboard.cxx:186
+msgid "Delete Selected Group"
+msgstr ""
+
+#: keyboard.cxx:174
+msgid "Delete selected Layout & Variant"
+msgstr ""
+
+#: keyboard.cxx:153
+msgid "E&xpert Mode"
+msgstr ""
+
+#: keyboard.cxx:181
+msgid "Relevant Options"
+msgstr ""
+
+#: keyboard.cxx:166
+msgid "Select Layout Variant"
+msgstr ""
+
+#: keyboard.cxx:175
+msgid "Select your Model"
+msgstr ""
+
+#: keyboard.cxx:150 keyboard.cxx:164
+msgid "Select your keyboard Layout"
+msgstr ""

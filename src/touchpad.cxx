@@ -4,11 +4,16 @@
 #include<fstream>
 #include<string.h>
 #include<cstdio>
+#include<locale.h>
+#include<libintl.h>
 extern "C"{
 #include<augeas.h>
 }
 
 #include "ui/yuifactory.h"
+
+#define _(STRING) gettext(STRING)
+#define LOG_TAG "[SaX3-Touchpad]"
 
 using namespace std;
 
@@ -39,10 +44,10 @@ class touchpad{
 touchpad::touchpad(){
 	factory = new UI::YUIFactory();
 	aug=NULL;root=NULL;flag=0;loadpath=NULL;
-	cout<<"Loading AUgeas";
+	cout<<LOG_TAG<<"Loading Augeas"<<endl;
 	aug = aug_init(root,loadpath,flag);
 	if(aug==NULL){
-		cout<<"AUGEAS NOT LOADED";
+		cout<<LOG_TAG<<"AUGEAS NOT LOADED"<<endl;
 	}
 }
 
@@ -50,47 +55,47 @@ void touchpad::initUI(){
 	dialog = factory->createDialog(20,20);
 	vL1 = factory->createVLayout(dialog);
 	thL1 = factory->createHLayout(vL1);
-	TapButton1 = factory->createCheckBox(thL1,"Emulate Mouse Button 1",false);
-	TapButton1Click = factory->createComboBox(thL1,"No Of Clicks");
+	TapButton1 = factory->createCheckBox(thL1,_("Emulate Mouse Button 1"),false);
+	TapButton1Click = factory->createComboBox(thL1,_("No Of Clicks"));
 	TapButton1Click->setDisabled();
 	TapButton1Click->addItem("1");
 	TapButton1Click->addItem("2");
 	TapButton1Click->addItem("3");
 	
 	thL2 = factory->createHLayout(vL1);
-	TapButton2 = factory->createCheckBox(thL2,"Emulate Mouse Button 2",false);
-	TapButton2Click = factory->createComboBox(thL2,"No Of Clicks");
+	TapButton2 = factory->createCheckBox(thL2,_("Emulate Mouse Button 2"),false);
+	TapButton2Click = factory->createComboBox(thL2,_("No Of Clicks"));
 	TapButton2Click->setDisabled();
 	TapButton2Click->addItem("2");
 	TapButton2Click->addItem("1");
 	TapButton2Click->addItem("3");
 
 	thL3 = factory->createHLayout(vL1);
-	TapButton3 = factory->createCheckBox(thL3,"Emulate Mouse Button 3",false);
-	TapButton3Click = factory->createComboBox(thL3,"No Of Clicks");
+	TapButton3 = factory->createCheckBox(thL3,_("Emulate Mouse Button 3"),false);
+	TapButton3Click = factory->createComboBox(thL3,_("No Of Clicks"));
 	TapButton3Click->setDisabled();
 	TapButton3Click->addItem("3");
 	TapButton3Click->addItem("2");
 	TapButton3Click->addItem("1");
 
-	VerticalEdgeScroll = factory->createCheckBox(vL1,"Enable Vertical Edge Scrolling",true);
-	HorizontalEdgeScroll = factory->createCheckBox(vL1,"Enable horizontal Edge Scrolling",true);
-	VerticalTwoFingerScroll = factory->createCheckBox(vL1,"Enable 2 finger Vertical Scroll",true);
-	HorizontalTwoFingerScroll = factory->createCheckBox(vL1,"Enable 2 finger Horizontal Scroll",true);
-	CircularScroll = factory->createCheckBox(vL1,"Enable Circular Scrolling",false);
-	CircularLocation = factory->createComboBox(vL1,"Circular Scrolling Location");
-	CircularLocation->addItem("Top Edges");
-	CircularLocation->addItem("Top Right Corner");
-	CircularLocation->addItem("Right Edge ");
-	CircularLocation->addItem("Bottom Right Corner");
-	CircularLocation->addItem("Bottom Edge");
-	CircularLocation->addItem("Bottom Left Corner");
-	CircularLocation->addItem("Left Edges");
-	CircularLocation->addItem("Top Left Corner");
+	VerticalEdgeScroll = factory->createCheckBox(vL1,_("Enable Vertical Edge Scrolling"),true);
+	HorizontalEdgeScroll = factory->createCheckBox(vL1,_("Enable horizontal Edge Scrolling"),true);
+	VerticalTwoFingerScroll = factory->createCheckBox(vL1,_("Enable 2 finger Vertical Scroll"),true);
+	HorizontalTwoFingerScroll = factory->createCheckBox(vL1,_("Enable 2 finger Horizontal Scroll"),true);
+	CircularScroll = factory->createCheckBox(vL1,_("Enable Circular Scrolling"),false);
+	CircularLocation = factory->createComboBox(vL1,_("Circular Scrolling Location"));
+	CircularLocation->addItem(_("Top Edges"));
+	CircularLocation->addItem(_("Top Right Corner"));
+	CircularLocation->addItem(_("Right Edge "));
+	CircularLocation->addItem(_("Bottom Right Corner"));
+	CircularLocation->addItem(_("Bottom Edge"));
+	CircularLocation->addItem(_("Bottom Left Corner"));
+	CircularLocation->addItem(_("Left Edges"));
+	CircularLocation->addItem(_("Top Left Corner"));
 	CircularLocation->setDisabled();
 	hL1 = factory->createHLayout(vL1);
-	okButton = factory->createPushButton(hL1,"Ok");
-	cancelButton = factory->createPushButton(hL1,"Cancel");
+	okButton = factory->createPushButton(hL1,_("Ok"));
+	cancelButton = factory->createPushButton(hL1,_("Cancel"));
 }
 
 void touchpad::respondToEvent(){
@@ -268,9 +273,12 @@ bool touchpad::writeConf(string &line,bool newNode,string parameter,bool isLastP
 }
 
 int main(){
-	touchpad * t = new touchpad();
-	t->initUI();
-	t->respondToEvent();
-	delete t;
-	return 0;
+    setlocale(LC_ALL,"");
+    bindtextdomain("sax3-touchpad","/usr/share/locale/");
+    textdomain("sax3-touchpad");
+    touchpad * t = new touchpad();
+    t->initUI();
+    t->respondToEvent();
+    delete t;
+    return 0;
 }	

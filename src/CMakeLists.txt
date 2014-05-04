@@ -4,6 +4,7 @@ link_libraries(${LIBYUI_LIBRARIES} ${AUGEAS_LIBRARIES} sax3-yuif)
 add_subdirectory(res)
 add_subdirectory(modules.d)
 add_subdirectory(man)
+add_subdirectory(translation)
 
 add_library(sax3-yuif SHARED ui/yuifactory.cxx ui/yui.cxx)
 add_executable(sax3 main.cxx)

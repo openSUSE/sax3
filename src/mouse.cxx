@@ -4,11 +4,16 @@
 #include<fstream>
 #include<string.h>
 #include<cstdio>
+#include<libintl.h>
+#include<locale.h>
+
 extern "C"{
 #include<augeas.h>
 }
 
 #include "ui/yuifactory.h"
+
+#define _(STRING) gettext(STRING)
 
 using namespace std;
 
@@ -304,31 +309,31 @@ void Mouse::initUI(){
 	vl1 = factory->createVLayout(dialog);
 	hl1 = factory->createHLayout(vl1);
 	
-	mouseList = factory->createComboBox(vl1,"Auto Detected Mouse");
+	mouseList = factory->createComboBox(vl1,_("Auto Detected Mouse"));
 	fillUpMouseList();
-	button3Label = factory->createLabel(vl1,"3 button Emulation Options");
+	button3Label = factory->createLabel(vl1,_("3 button Emulation Options"));
 	enableButton3Layout = factory->createHLayout(vl1);
-	enableButton3Label = factory->createLabel(enableButton3Layout,"Enable 3 Buttons");
+	enableButton3Label = factory->createLabel(enableButton3Layout,_("Enable 3 Buttons"));
 	button3 = factory->createRadioButtonGroup(enableButton3Layout);
-	button3->addButton("Yes");
-	button3->addButton("No");
-	timeout = factory->createIntField(vl1,"3 Button Timeout",0,1000,50);
+	button3->addButton(_("Yes"));
+	button3->addButton(_("No"));
+	timeout = factory->createIntField(vl1,_("3 Button Timeout"),0,1000,50);
 	timeout->setDisabled();
-	wheelLabel = factory->createLabel(vl1,"Wheel Emulation Options");
+	wheelLabel = factory->createLabel(vl1,_("Wheel Emulation Options"));
 	enableWheelLayout = factory->createHLayout(vl1);
-	enableWheelLabel = factory->createLabel(enableWheelLayout,"Enable Wheel Emulation");
+	enableWheelLabel = factory->createLabel(enableWheelLayout,_("Enable Wheel Emulation"));
 	wheel = factory->createRadioButtonGroup(enableWheelLayout);
-	wheel->addButton("Yes");
-	wheel->addButton("No");
-	wheeltimeout = factory->createIntField(vl1,"Wheel Button Timeout",0,1000,200);
+	wheel->addButton(_("Yes"));
+	wheel->addButton(_("No"));
+	wheeltimeout = factory->createIntField(vl1,_("Wheel Button Timeout"),0,1000,200);
 	wheeltimeout->setDisabled();
-	InvX = factory->createCheckBox(vl1,"Invert X Axis",false);
-	InvY = factory->createCheckBox(vl1,"Invert Y Axis",false);
+	InvX = factory->createCheckBox(vl1,_("Invert X Axis"),false);
+	InvY = factory->createCheckBox(vl1,_("Invert Y Axis"),false);
 
-	AngleOffset = factory->createIntField(vl1,"Angle Offset in degrees",0,360,0);
+	AngleOffset = factory->createIntField(vl1,_("Angle Offset in degrees"),0,360,0);
 	buttonLayout = factory->createHLayout(vl1);
-	okButton = factory->createPushButton(buttonLayout,"Save");
-	cancelButton = factory->createPushButton(buttonLayout,"Close");
+	okButton = factory->createPushButton(buttonLayout,_("Save"));
+	cancelButton = factory->createPushButton(buttonLayout,_("Close"));
 }
 Mouse::~Mouse(){
 	delete cancelButton;
@@ -507,6 +512,9 @@ bool Mouse::writeConf(string &line,bool newNode,string parameter,bool isLastPara
 
 
 int main(){
+	setlocale(LC_ALL,"");
+	bindtextdomain("sax3-mouse","/usr/share/locale");
+	textdomain("sax3-mouse");
 	Mouse * m = new Mouse();
 	m->autodetect();
 	m->initUI();

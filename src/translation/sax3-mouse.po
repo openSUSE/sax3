@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-04 17:42+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: mouse.cxx:320
+msgid "3 Button Timeout"
+msgstr ""
+
+#: mouse.cxx:314
+msgid "3 button Emulation Options"
+msgstr ""
+
+#: mouse.cxx:333
+msgid "Angle Offset in degrees"
+msgstr ""
+
+#: mouse.cxx:312
+msgid "Auto Detected Mouse"
+msgstr ""
+
+#: mouse.cxx:336
+msgid "Close"
+msgstr ""
+
+#: mouse.cxx:316
+msgid "Enable 3 Buttons"
+msgstr ""
+
+#: mouse.cxx:324
+msgid "Enable Wheel Emulation"
+msgstr ""
+
+#: mouse.cxx:330
+msgid "Invert X Axis"
+msgstr ""
+
+#: mouse.cxx:331
+msgid "Invert Y Axis"
+msgstr ""
+
+#: mouse.cxx:319 mouse.cxx:327
+msgid "No"
+msgstr ""
+
+#: mouse.cxx:335
+msgid "Save"
+msgstr ""
+
+#: mouse.cxx:328
+msgid "Wheel Button Timeout"
+msgstr ""
+
+#: mouse.cxx:322
+msgid "Wheel Emulation Options"
+msgstr ""
+
+#: mouse.cxx:318 mouse.cxx:326
+msgid "Yes"
+msgstr ""

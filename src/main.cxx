@@ -16,6 +16,7 @@ extern "C"{
 #include "ui/yuifactory.h"
 
 #define _(STRING) gettext(STRING)
+#define LOG_TAG "[SaX3]"
 
 using namespace std;
 
@@ -39,7 +40,6 @@ class Init{
 	vector<UI::yPushButton*> button;
 	vector<UI::yImage*> image;
 	vector<string> execs;
-//	UI::yImage image;UI::yPushButton button;
 	protected:
 		void makeEntry(char s1[],char s2[],char s3[]){
 			strcpy(getEntry,s1);
@@ -58,17 +58,15 @@ class Init{
 		aug_set(aug,"/augeas/load/Desktop/lens", "Desktop.lns");
 		aug_set(aug,"/augeas/load/Desktop/incl[last()+1]","/usr/share/sax3/modules.d/*");
 		err = aug_load(aug);
-		cout<<"------------------------------------------------------------------<<<"<<err<<">>>";
+		cout<<LOG_TAG<<" Desktop Lens Loading status is "<<err<<"(0 indicates success)"<<endl;
 		if(dp!=NULL){
-			cout<<"DP IF";
 			while(ep = readdir(dp)){
 				if(strcmp(ep->d_name,".") && strcmp(ep->d_name,"..")){
-					cout<<"__________________________________________________________"<<err<<endl;
 					UI::yHLayout * hLayout = factory->createHLayout(mainLayout);
 					getEntry = new char[300];
 					makeEntry("/files/usr/share/sax3/modules.d/",ep->d_name,"/*/Icon");
 					err = aug_get(aug,getEntry,&value);
-					cout<<getEntry;
+					cout<<LOG_TAG<<getEntry<<" : "<<err<<" (1 indicates success, 0 is cannot retreive, -1 is too bad)"<<endl;
 					if(err==1)
 					image.push_back(factory->createImage(hLayout,_(value)));
 					delete getEntry;
@@ -76,6 +74,8 @@ class Init{
 					getEntry = new char[100];
 					makeEntry("/files/usr/share/sax3/modules.d/",ep->d_name,"/*/Name");
 					err = aug_get(aug,getEntry,&value);
+					cout<<LOG_TAG<<getEntry<<" : "<<err<<" (1 indicates success, 0 is cannot retreive, -1 is too bad)"<<endl;
+                                        cout<<LOG_TAG<<"[VALUE]"<<value<<endl;
 					if(err==1)
 					button.push_back(factory->createPushButton(hLayout,_(value)));
 					delete getEntry;	
@@ -83,10 +83,9 @@ class Init{
 					getEntry = new char[100];
 					makeEntry("/files/usr/share/sax3/modules.d/",ep->d_name,"/*/Exec");
 					err = aug_get(aug,getEntry,&value);
+					cout<<LOG_TAG<<getEntry<<" : "<<err<<" (1 indicates success, 0 is cannot retreive, -1 is too bad)"<<endl;
 					if(err==1)
 					execs.push_back(value);
-					
-//					cout<<value<<endl;
 					delete getEntry;
 				}
 			}

@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-04 17:42+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: touchpad.cxx:91
+msgid "Bottom Edge"
+msgstr ""
+
+#: touchpad.cxx:92
+msgid "Bottom Left Corner"
+msgstr ""
+
+#: touchpad.cxx:90
+msgid "Bottom Right Corner"
+msgstr ""
+
+#: touchpad.cxx:98
+msgid "Cancel"
+msgstr ""
+
+#: touchpad.cxx:86
+msgid "Circular Scrolling Location"
+msgstr ""
+
+#: touchpad.cxx:58
+msgid "Emulate Mouse Button 1"
+msgstr ""
+
+#: touchpad.cxx:66
+msgid "Emulate Mouse Button 2"
+msgstr ""
+
+#: touchpad.cxx:74
+msgid "Emulate Mouse Button 3"
+msgstr ""
+
+#: touchpad.cxx:84
+msgid "Enable 2 finger Horizontal Scroll"
+msgstr ""
+
+#: touchpad.cxx:83
+msgid "Enable 2 finger Vertical Scroll"
+msgstr ""
+
+#: touchpad.cxx:85
+msgid "Enable Circular Scrolling"
+msgstr ""
+
+#: touchpad.cxx:81
+msgid "Enable Vertical Edge Scrolling"
+msgstr ""
+
+#: touchpad.cxx:82
+msgid "Enable horizontal Edge Scrolling"
+msgstr ""
+
+#: touchpad.cxx:93
+msgid "Left Edges"
+msgstr ""
+
+#: touchpad.cxx:59 touchpad.cxx:67 touchpad.cxx:75
+msgid "No Of Clicks"
+msgstr ""
+
+#: touchpad.cxx:97
+msgid "Ok"
+msgstr ""
+
+#: touchpad.cxx:89
+msgid "Right Edge "
+msgstr ""
+
+#: touchpad.cxx:87
+msgid "Top Edges"
+msgstr ""
+
+#: touchpad.cxx:94
+msgid "Top Left Corner"
+msgstr ""
+
+#: touchpad.cxx:88
+msgid "Top Right Corner"
+msgstr ""
