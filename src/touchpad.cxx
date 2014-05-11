@@ -56,7 +56,7 @@ void touchpad::initUI(){
 	vL1 = factory->createVLayout(dialog);
 	thL1 = factory->createHLayout(vL1);
 	TapButton1 = factory->createCheckBox(thL1,_("Emulate Mouse Button 1"),false);
-	TapButton1Click = factory->createComboBox(thL1,_("No Of Clicks"));
+	TapButton1Click = factory->createComboBox(thL1,_("Number Of Clicks"));
 	TapButton1Click->setDisabled();
 	TapButton1Click->addItem("1");
 	TapButton1Click->addItem("2");
@@ -64,7 +64,7 @@ void touchpad::initUI(){
 	
 	thL2 = factory->createHLayout(vL1);
 	TapButton2 = factory->createCheckBox(thL2,_("Emulate Mouse Button 2"),false);
-	TapButton2Click = factory->createComboBox(thL2,_("No Of Clicks"));
+	TapButton2Click = factory->createComboBox(thL2,_("Number Of Clicks"));
 	TapButton2Click->setDisabled();
 	TapButton2Click->addItem("2");
 	TapButton2Click->addItem("1");
@@ -72,7 +72,7 @@ void touchpad::initUI(){
 
 	thL3 = factory->createHLayout(vL1);
 	TapButton3 = factory->createCheckBox(thL3,_("Emulate Mouse Button 3"),false);
-	TapButton3Click = factory->createComboBox(thL3,_("No Of Clicks"));
+	TapButton3Click = factory->createComboBox(thL3,_("Number Of Clicks"));
 	TapButton3Click->setDisabled();
 	TapButton3Click->addItem("3");
 	TapButton3Click->addItem("2");
@@ -84,13 +84,13 @@ void touchpad::initUI(){
 	HorizontalTwoFingerScroll = factory->createCheckBox(vL1,_("Enable 2 finger Horizontal Scroll"),true);
 	CircularScroll = factory->createCheckBox(vL1,_("Enable Circular Scrolling"),false);
 	CircularLocation = factory->createComboBox(vL1,_("Circular Scrolling Location"));
-	CircularLocation->addItem(_("Top Edges"));
+	CircularLocation->addItem(_("Top Edge"));
 	CircularLocation->addItem(_("Top Right Corner"));
 	CircularLocation->addItem(_("Right Edge "));
 	CircularLocation->addItem(_("Bottom Right Corner"));
 	CircularLocation->addItem(_("Bottom Edge"));
 	CircularLocation->addItem(_("Bottom Left Corner"));
-	CircularLocation->addItem(_("Left Edges"));
+	CircularLocation->addItem(_("Left Edge"));
 	CircularLocation->addItem(_("Top Left Corner"));
 	CircularLocation->setDisabled();
 	hL1 = factory->createHLayout(vL1);

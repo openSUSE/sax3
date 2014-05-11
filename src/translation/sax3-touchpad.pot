@@ -70,11 +70,11 @@ msgid "Enable horizontal Edge Scrolling"
 msgstr ""
 
 #: touchpad.cxx:93
-msgid "Left Edges"
+msgid "Left Edge"
 msgstr ""
 
 #: touchpad.cxx:59 touchpad.cxx:67 touchpad.cxx:75
-msgid "No Of Clicks"
+msgid "Number Of Clicks"
 msgstr ""
 
 #: touchpad.cxx:97
@@ -86,7 +86,7 @@ msgid "Right Edge "
 msgstr ""
 
 #: touchpad.cxx:87
-msgid "Top Edges"
+msgid "Top Edge"
 msgstr ""
 
 #: touchpad.cxx:94
