@@ -1,3 +1,5 @@
+add_library(sax3-yuif SHARED ui/yuifactory.cxx ui/yui.cxx)
+
 include_directories(${SaX3_SOURCE_DIR}/src/ui ${LIBYUI_INCLUDE_DIR} ${AUGEAS_INCLUDE_DIR})
 link_libraries(${LIBYUI_LIBRARIES} ${AUGEAS_LIBRARIES} sax3-yuif)
 
@@ -6,7 +8,6 @@ add_subdirectory(modules.d)
 add_subdirectory(man)
 add_subdirectory(translation)
 
-add_library(sax3-yuif SHARED ui/yuifactory.cxx ui/yui.cxx)
 add_executable(sax3 main.cxx)
 add_executable(sax3-keyboard keyboard.cxx)
 add_executable(sax3-mouse mouse.cxx)
